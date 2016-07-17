@@ -239,31 +239,6 @@ window.onload = function() {
 
     };
 
-// function showValue2(knee) {
-  
-//      document.getElementById("range2").innerHTML=knee;
-//    console.log("knee: " + knee);
-//    compressor.knee.value = knee;
-  
-// }
-
-// function showValue3(ratio) {
-  
-//   document.getElementById("range3").innerHTML=ratio;
-//   console.log("ratio: " + ratio);
-//   compressor.ratio.value = ratio;
-  
-// }
-
-// function showValue4(reduction) {
-  
-//   document.getElementById("range4").innerHTML=reduction;
-//   console.log("reduction: " + reduction);
-//   compressor.ratio.value = reduction;
-//   compressor.reduction.value = reduction;
-  
-// }
-
   compressor.attack.value = 0;
   compressor.release.value = 0.25;
 

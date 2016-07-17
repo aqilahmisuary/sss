@@ -34,3 +34,23 @@ button:hover {
   background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
   text-decoration: none;
 }
+
+#gen {
+  color: pink;
+}
+
+#rec {
+  color: lightblue;
+}
+
+#fac {
+  color: lightgreen;
+}
+
+code {
+  color: orange;
+}
+
+.reveal pre code  {
+  font-size: 20px;
+}

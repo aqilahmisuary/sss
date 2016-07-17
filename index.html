@@ -57,8 +57,86 @@
                 <br>
                 <canvas id="canvasHov" class="fragment fade-in" width="845" height="423"></canvas>
                 <br>
-                <div class="fragment fade-in" ><input type="range" id="compressorSlider" min="-100" max="100" value="0"> Compressor Threshold <span id="thresRange"></span></div>
+                <div class="fragment fade-in">
+                    <input type="range" id="compressorSlider" min="-100" max="100" value="0"> Compressor Threshold <span id="thresRange"></span></div>
             </section>
+            <section id="slide-5">
+                <p>So what is happening and how do we make it cool?</p>
+            </section>
+            <section id="slide-6">
+                <p class="fragment fade-in" data-fragment-index="1">
+                    <h3>Introducing Sound Synthesis</h3></p>
+                <p class="fragment fade-in" data-fragment-index="2">Sound synthesis is the technique of generating sound, using electronic hardware or software, from scratch.</p>
+                <p class="fragment fade-in" data-fragment-index="3">Commonly used to <span id="gen" class="fragment fade-in" data-fragment-index="4">generate interesting and unique sounds or timbres incapable of being produced acoustically,</span> <span id="rec" class="fragment fade-in" data-fragment-index="5"><b> recreate or model the sounds of real-world acoustic instruments or sounds,</b></span> <span id="fac" class="fragment fade-in" data-fragment-index="6"> or facilitate the automation of systems and processes (text-to-speech software, train station P.A.s)</span></p>
+                <p class="fragment fade-in" data-fragment-index="7">From <a href="https://en.wikibooks.org/wiki/Sound_Synthesis_Theory/Introduction">WikiBooks: Sound Synthesis Theory/Introduction </a></p>
+            </section>
+            <section id="slide-7">
+                <p class="fragment fade-in" data-fragment-index="1">
+                    <h3>Types of Sound Synthesis</h3></p>
+                <p class="fragment fade-in" data-fragment-index="2">Subtractive Synthesis</p>
+                <p class="fragment fade-in" data-fragment-index="3">Additive Synthesis (and Resynthesis)</p>
+                <p class="fragment fade-in" data-fragment-index="4">Component (Physical) Modeling Synthesis</p>
+                <p class="fragment fade-in" data-fragment-index="5">Wavetable Synthesis</p>
+                <p class="fragment fade-in" data-fragment-index="6">Vector Synthesis</p>
+                <p class="fragment fade-in" data-fragment-index="7">LA (Linear Arithmetic) Synthesis</p>
+                <p class="fragment fade-in" data-fragment-index="8">Phase Distortion Synthesis</p>
+                <p class="fragment fade-in" data-fragment-index="9">FM (Frequency Modulation) Synthesis</p>
+                <p class="fragment fade-in" data-fragment-index="10">Sample-Based (PCM) (S&S) Synthesis</p>
+                <p class="fragment fade-in" data-fragment-index="11">Granular Synthesis</p>
+            </section>
+            <section id="slide-8">
+                <p class="fragment fade-in" data-fragment-index="1">
+                    <h3>Subtractive Synthesis</h3></p>
+                <p>
+                    <blockquote class="fragment fade-in" data-fragment-index="2">Subtractive Synthesis is a very simple signal chain of an oscillator (sound source) running through a filter (EQ curve) which is then sent to an amplifier for gain staging and ADSR control.</blockquote><span class="fragment fade-in" data-fragment-index="3"><a href="https://theproaudiofiles.com/sound-synthesis-basics/">From ProAudioFiles.com</a></span></p>
+            </section>
+            <section id="slide-9">
+                <p class="fragment fade-in" data-fragment-index="1">
+                    <h3>Seeking guidance from shifu Chris Lowis</h3></p>
+                <p><span class="fragment fade-in" data-fragment-index="3"><a href="https://dev.opera.com/articles/drum-sounds-webaudio/">Synthesising Drum Sounds with the Web Audio API</a></span></p>
+            </section>
+            <section id="slide-10">
+                <p class="fragment fade-in" data-fragment-index="1">
+                    <h3>Synthesising the kick drum</h3></p>
+                <p class="fragment fade-in" data-fragment-index="2"><img data-src="./images/kickGraph.jpg"></p>
+            </section>
+            <section id="slide-11">
+                <p class="fragment fade-in" data-fragment-index="1">Create audio context</p>
+                <p> <pre><code class="fragment fade-in" data-fragment-index="2" data-trim data-noescape>
+                window.AudioContext = window.AudioContext || window.webkitAudioContext;
+var audioContext = new AudioContext();
+                </code></pre></p>
+                <p class="fragment fade-in" data-fragment-index="3">Create our Oscillator nodes and Gain nodes using the <code>createOscillator()</code> and <code>createGain()</code> methods</p>
+                <p> <pre><code class="fragment fade-in" data-fragment-index="4" data-trim data-noescape>
+var osc = audioContext.createOscillator();
+var osc2 = audioContext.createOscillator();
+var gainOsc = audioContext.createGain();
+var gainOsc2 = audioContext.createGain();
+                </code></pre></p>
+                <p class="fragment fade-in" data-fragment-index="5">Define the type of oscillators we’re going to use</p>
+                <p> <pre><code class="fragment fade-in" data-fragment-index="6" data-trim data-noescape>
+osc.type = "triangle";
+osc2.type = "sine";
+
+osc.frequency.value = 40;
+osc2.frequency.value = 80;
+                </code></pre></p>               
+            </section>
+             <section id="slide-12">
+                <p class="fragment fade-in" data-fragment-index="1">Automate the amplitude and frequency</p>
+                <p class="fragment fade-in" data-fragment-index="2"><img data-src="./images/kickwave.png"></p>
+                <p class="fragment fade-in" data-fragment-index="3">The sound of a kick drum starts off with high attack and falls away rapidly. So to emulate this, we can use the methods <code>setValueAtTime()</code> or <code>linearRampToValueAtTime()</code> and <code>exponentialRampToValueAtTime()</code> methods</p>
+            </section>
+            <section id="slide-13">
+            <p class="fragment fade-in" data-fragment-index="1">Automating our oscillator and gain nodes.</p>
+            <p> <pre><code class="fragment fade-in" data-fragment-index="2" data-trim data-noescape>
+gainOsc.gain.setValueAtTime(1, audioContext.currentTime);
+gainOsc.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5);
+
+gainOsc2.gain.setValueAtTime(1, audioContext.currentTime);
+gainOsc2.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5);  
+                </code></pre></p> 
+                </section>    
         </div>
     </div>
     <script src="lib/js/head.min.js"></script>
