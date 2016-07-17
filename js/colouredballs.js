@@ -136,19 +136,19 @@ window.onload = function() {
 
     };
 
-        sine.addEventListener("mouseover", function() {
+    sine.addEventListener("mouseover", function() {
         oscillator.type = 'sine';
 
     });
-        tri.addEventListener("mouseover", function() {
+    tri.addEventListener("mouseover", function() {
         oscillator.type = 'triangle';
 
     });
-        sq.addEventListener("mouseover", function() {
+    sq.addEventListener("mouseover", function() {
         oscillator.type = 'square';
 
     });
-        saw.addEventListener("mouseover", function() {
+    saw.addEventListener("mouseover", function() {
         oscillator.type = 'sawtooth';
 
     });
@@ -160,12 +160,12 @@ window.onload = function() {
         var buffer = context.createBufferSource()
         convolver.buffer = impulse
 
-            /* Connections */
+        /* Connections */
         oscillator.connect(gain);
         gain.connect(convolver);
         convolver.connect(colGain);
         colGain.connect(mixGain);
-        
+
 
     });
 
@@ -181,49 +181,49 @@ window.onload = function() {
     }
 
     //FUN GRAINS
-   funGrain.addEventListener("mouseover", function() {
+    funGrain.addEventListener("mouseover", function() {
 
-       var source = context.createBufferSource();
-       var grainGain = context.createGain();
-       var panNode = context.createStereoPanner();
-       var now = context.currentTime;
+        var source = context.createBufferSource();
+        var grainGain = context.createGain();
+        var panNode = context.createStereoPanner();
+        var now = context.currentTime;
 
-       source.buffer = buffer;
-       var soundDuration = source.buffer.duration;
+        source.buffer = buffer;
+        var soundDuration = source.buffer.duration;
 
-       var randomParts = Math.random() * (soundDuration - 0.1) + 0.1;
-       var randomPitch = Math.random() * (2 - -0.5) + -0.5;
-       var randomPan = Math.random() * (1 - -1) + -1;
+        var randomParts = Math.random() * (soundDuration - 0.1) + 0.1;
+        var randomPitch = Math.random() * (2 - -0.5) + -0.5;
+        var randomPan = Math.random() * (1 - -1) + -1;
 
-       panNode.pan.value = randomPan;
+        panNode.pan.value = randomPan;
 
-       source.playbackRate.value = randomPitch;
+        source.playbackRate.value = randomPitch;
 
-       grainGain.gain.setValueAtTime(0, now);
-       grainGain.gain.linearRampToValueAtTime(1, now + 0.1);
-       grainGain.gain.linearRampToValueAtTime(0, now + 0.1 + 0.3);
+        grainGain.gain.setValueAtTime(0, now);
+        grainGain.gain.linearRampToValueAtTime(1, now + 0.1);
+        grainGain.gain.linearRampToValueAtTime(0, now + 0.1 + 0.3);
 
-       source.connect(panNode);
-       panNode.connect(grainGain);
-       grainGain.connect(context.destination);
+        source.connect(panNode);
+        panNode.connect(grainGain);
+        grainGain.connect(context.destination);
 
-       source.start(now, randomParts, 3);
+        source.start(now, randomParts, 3);
 
-   }, false);
+    }, false);
 
 
-   //HOVER FUN
-   var hoverGain = context.createGain();
-   var hoverOsc = context.createOscillator();
-   var analyser = context.createAnalyser();
-   var compressor = context.createDynamicsCompressor();
+    //HOVER FUN
+    var hoverGain = context.createGain();
+    var hoverOsc = context.createOscillator();
+    var analyser = context.createAnalyser();
+    var compressor = context.createDynamicsCompressor();
 
     hoverOsc.type = 'sine';
     hoverOsc.frequency.value = 500;
     hoverGain.gain.value = 0;
     hoverOsc.start(context.currentTime);
 
- var threshold = document.getElementById("compressorSlider")
+    var threshold = document.getElementById("compressorSlider")
 
     threshold.oninput = function() {
 
@@ -239,8 +239,8 @@ window.onload = function() {
 
     };
 
-  compressor.attack.value = 0;
-  compressor.release.value = 0.25;
+    compressor.attack.value = 0;
+    compressor.release.value = 0.25;
 
     hoverOsc.connect(hoverGain);
     hoverGain.connect(compressor);
@@ -285,20 +285,20 @@ the number of data values you will have to play with for the visualization*/
         myCanvas.lineTo(WIDTH, HEIGHT / 2);
         myCanvas.stroke();
     }
- 
+
     canvasHov.addEventListener('mouseover', function() {
         hoverGain.gain.value = 0.8;
         //mixGain.gain.value = 0.5;
         drawHover();
         console.log("works?");
-        
-       
+
+
     });
 
     canvasHov.addEventListener('mouseout', function() {
         hoverGain.gain.value = 0;
     });
-  
+
     drawHover();
 
 
@@ -390,18 +390,18 @@ the number of data values you will have to play with for the visualization*/
         box.style.position = 'relative';
         box.style.float = 'left';
 
-        switch (true) {       
+        switch (true) {
             case instrument === kick:
                 kick();
                 box.innerHTML = '<div class=\'test\'></div>';
-                if(newBoxes2 != null){
-                newBoxes2.appendChild(box);
-                newBoxes2.style.width = '900px';
-                newBoxes2.style.height = '60px';
-                //newBoxes2.style.position = 'relative';
-                newBoxes2.style.display = 'in-line';
-                newBoxes2.style.color = "black";
-                //newBoxes2.style.border = '10px solid white';
+                if (newBoxes2 != null) {
+                    newBoxes2.appendChild(box);
+                    newBoxes2.style.width = '900px';
+                    newBoxes2.style.height = '60px';
+                    //newBoxes2.style.position = 'relative';
+                    newBoxes2.style.display = 'in-line';
+                    newBoxes2.style.color = "black";
+                    //newBoxes2.style.border = '10px solid white';
                 }
                 break;
         }
@@ -420,9 +420,9 @@ the number of data values you will have to play with for the visualization*/
 
                 if (elements % 2 == 0 || elements == 0) {
                     createBox(kick);
-                    
+
                 }
-                
+
                 while (newBoxes2.hasChildNodes() && elements > 20) {
                     newBoxes2.removeChild(newBoxes2.firstChild);
                 }
@@ -435,10 +435,10 @@ the number of data values you will have to play with for the visualization*/
             clearInterval(Timer);
         });
     };
-    
-//KICK SOUNDS - END
 
-//GENERATING NOISE
+    //KICK SOUNDS - END
+
+    //GENERATING NOISE
 
     var noiseButton = document.getElementById('noiseButton');
     noiseButton.addEventListener('mouseover', function() {
@@ -460,6 +460,144 @@ the number of data values you will have to play with for the visualization*/
         node.connect(mixGain);
     }
 
+
+    //SNARE SOUNDS
+    var filterGain = context.createGain();
+    var snareButton = document.querySelector('#snareButton');
+
+    function snare() {
+
+        var osc3 = context.createOscillator();
+        var gainOsc3 = context.createGain();
+
+        filterGain.gain.setValueAtTime(1, context.currentTime);
+        filterGain.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 0.2);
+
+        osc3.type = 'triangle';
+        osc3.frequency.value = 100;
+
+        gainOsc3.gain.value = 0;
+        gainOsc3.gain.setValueAtTime(0, context.currentTime);
+        //gainOsc3.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+
+        //Connections
+        osc3.connect(gainOsc3);
+        gainOsc3.connect(mixGain);
+
+        //mixGain.gain.value = 1;
+
+        osc3.start(context.currentTime);
+        osc3.stop(context.currentTime + 0.2);
+
+        var node = context.createBufferSource(),
+            buffer = context.createBuffer(1, 4096, context.sampleRate),
+            data = buffer.getChannelData(0);
+
+        var filter = context.createBiquadFilter();
+
+        filter.type = 'highpass';
+        filter.frequency.setValueAtTime(100, context.currentTime);
+        filter.frequency.linearRampToValueAtTime(1000, context.currentTime + 0.2);
+
+        for (var i = 0; i < 4096; i++) {
+            data[i] = Math.random();
+        }
+
+        node.buffer = buffer;
+        node.loop = true;
+
+        //Connections
+        node.connect(filter);
+        filter.connect(filterGain);
+        filterGain.connect(mixGain);
+
+        node.start(context.currentTime);
+        node.stop(context.currentTime + 0.2);
+
+    }
+
+    //BUTTONS
+    snareButton.addEventListener('mouseover', function() {
+        snare();
+    });
+
+    filterGain.gain.value = 0;
+
+    //SIX OSCS
+
+    var sixOscGain = context.createGain();
+
+    sixOscGain.gain.value = 0.1;
+
+    var fundamental = 40;
+    var ratios = [2, 3, 4.16, 5.43, 6.79, 8.21];
+
+    function waveez() {
+
+        ratios.forEach(function(ratio) {
+            var osc4 = context.createOscillator();
+
+            osc4.type = "square";
+            osc4.frequency.value = fundamental * ratio;
+
+            osc4.start(context.currentTime);
+            osc4.stop(context.currentTime + 0.5);
+
+            osc4.connect(sixOscGain);
+            sixOscGain.connect(mixGain);
+        });
+
+    };
+
+    var wavez = document.getElementById('sixOscButton');
+
+    wavez.addEventListener("mouseover", function() {
+        waveez();
+
+    });
+
+    var hiHat = document.getElementById('hihatButton');
+
+function hihat() {
+
+        var gainOsc5 = context.createGain();
+        var fundamental = 40;
+        var ratios = [
+            2,
+            3,
+            4.16,
+            5.43,
+            6.79,
+            8.21
+        ];
+        var bandpass = context.createBiquadFilter();
+        bandpass.type = 'bandpass';
+        bandpass.frequency.value = 10000;
+        var highpass = context.createBiquadFilter();
+        highpass.type = 'highpass';
+        highpass.frequency.value = 7000;
+        ratios.forEach(function(ratio) {
+            var osc5 = context.createOscillator();
+            osc5.type = 'square';
+            osc5.frequency.value = fundamental * ratio;
+            osc5.connect(bandpass);
+            osc5.start(context.currentTime);
+            osc5.stop(context.currentTime + 0.05);
+        });
+
+        gainOsc5.gain.setValueAtTime(1, context.currentTime);
+        gainOsc5.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 0.05);
+
+        bandpass.connect(highpass);
+        highpass.connect(gainOsc5);
+        gainOsc5.connect(mixGain);
+
+    };
+
+    hiHat.addEventListener("mouseover", function() {
+        hihat();
+
+    });
 
     //Ultimate connection
     mixGain.connect(context.destination);
