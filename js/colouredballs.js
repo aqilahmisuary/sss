@@ -219,7 +219,7 @@ window.onload = function() {
    var compressor = context.createDynamicsCompressor();
 
     hoverOsc.type = 'sine';
-    hoverOsc.frequency.value = 100;
+    hoverOsc.frequency.value = 500;
     hoverGain.gain.value = 0;
     hoverOsc.start(context.currentTime);
 
@@ -251,16 +251,6 @@ window.onload = function() {
     var WIDTH = 1000;
     var HEIGHT = 400;
 
-    //var canvas = document.getElementById('myCanvas');
-    //var canvasHov = document.createElement("canvas");
-    //canvasHov.style.width = WIDTH;
-    //canvasHov.style.height = HEIGHT;
-    //canvasHov.style.borderRadius = '25px';
-    // if(canvasHov != null){
-    // canvasHook.appendChild(canvasHov);
-    // }
-    
-    //var canvas = document.querySelector('.visualizer');
     var myCanvas = canvasHov.getContext('2d');
     analyser.fftSize = 2048;
     var bufferLength = analyser.frequencyBinCount;
@@ -298,6 +288,7 @@ the number of data values you will have to play with for the visualization*/
  
     canvasHov.addEventListener('mouseover', function() {
         hoverGain.gain.value = 0.8;
+        //mixGain.gain.value = 0.5;
         drawHover();
         console.log("works?");
         
@@ -324,6 +315,151 @@ the number of data values you will have to play with for the visualization*/
     function stop() {
         gain.gain.value = 0;
     }
+
+    //KICK SOUNDS - START
+    var filterGain = context.createGain();
+
+    function kick() {
+
+        var osc = context.createOscillator();
+        var osc2 = context.createOscillator();
+        var gainOsc = context.createGain();
+        var gainOsc2 = context.createGain();
+
+        osc.type = 'triangle';
+        osc2.type = 'sine';
+
+        gainOsc.gain.setValueAtTime(1, context.currentTime);
+        gainOsc.gain.exponentialRampToValueAtTime(0.001, context.currentTime + 0.5);
+        gainOsc.connect(context.destination);
+        gainOsc2.gain.setValueAtTime(1, context.currentTime);
+        gainOsc2.gain.exponentialRampToValueAtTime(0.001, context.currentTime + 0.5);
+        gainOsc2.connect(context.destination);
+        osc.frequency.setValueAtTime(120, context.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(1, context.currentTime + 0.5);
+        osc2.frequency.setValueAtTime(50, context.currentTime);
+
+        //Connections
+        osc.connect(gainOsc);
+        osc2.connect(gainOsc2);
+        gainOsc2.connect(mixGain);
+        gainOsc.connect(mixGain);
+
+        // mixGain.gain.value = 1;
+
+        osc.start(context.currentTime);
+        osc2.start(context.currentTime);
+        osc.stop(context.currentTime + 0.5);
+        osc2.stop(context.currentTime + 0.5);
+    }
+
+    //BUTTON
+    mixButton.addEventListener('mouseover', function() {
+        draw2();
+    });
+
+    //INTERVALS
+    function interval(func, wait, times) {
+        var interv = function(w, t) {
+            return function() {
+                if (typeof t === 'undefined' || t-- > 0) {
+                    setTimeout(interv, w);
+                    try {
+                        func.call(null);
+                    } catch (e) {
+                        t = 0;
+                        throw e.toString();
+                    }
+                }
+            };
+        }(wait, times);
+        setTimeout(interv, wait);
+    }
+
+    //TESTING REQUESTANIMATIONFRAME FOR SCHEDULING
+    var newBoxes2 = document.getElementById('container2');
+    var fps = 6;
+
+    //DRAW BOXES
+    function createBox(instrument) {
+
+        box = document.createElement('div');
+        box.style.width = '300px';
+        box.style.height = '50px';
+        box.style.background = 'orange';
+        box.style.position = 'relative';
+        box.style.float = 'left';
+
+        switch (true) {       
+            case instrument === kick:
+                kick();
+                box.innerHTML = '<div class=\'test\'></div>';
+                if(newBoxes2 != null){
+                newBoxes2.appendChild(box);
+                newBoxes2.style.width = '900px';
+                newBoxes2.style.height = '60px';
+                //newBoxes2.style.position = 'relative';
+                newBoxes2.style.display = 'in-line';
+                newBoxes2.style.color = "black";
+                //newBoxes2.style.border = '10px solid white';
+                }
+                break;
+        }
+
+    };
+
+    function draw2() {
+
+        var Timer = setInterval(function() {
+
+            //requestAnimationFrame(draw2);
+
+            if (container2 != null) {
+                var elements = container2.getElementsByTagName('div').length;
+                console.log(elements);
+
+                if (elements % 2 == 0 || elements == 0) {
+                    createBox(kick);
+                    
+                }
+                
+                while (newBoxes2.hasChildNodes() && elements > 20) {
+                    newBoxes2.removeChild(newBoxes2.firstChild);
+                }
+            }
+        }, 1000 / fps);
+
+        var stopIt = document.getElementById('stopButton');
+
+        stopIt.addEventListener('mouseover', function() {
+            clearInterval(Timer);
+        });
+    };
+    
+//KICK SOUNDS - END
+
+//GENERATING NOISE
+
+    var noiseButton = document.getElementById('noiseButton');
+    noiseButton.addEventListener('mouseover', function() {
+        noise();
+    });
+
+    function noise() {
+
+        var node = context.createBufferSource(),
+            buffer = context.createBuffer(1, 4096, context.sampleRate),
+            data = buffer.getChannelData(0);
+        for (var i = 0; i < 4096; i++) {
+            data[i] = Math.random();
+        }
+        node.buffer = buffer;
+        node.loop = true;
+        node.start(context.currentTime);
+        node.stop(context.currentTime + 0.2);
+        node.connect(mixGain);
+    }
+
 
     //Ultimate connection
     mixGain.connect(context.destination);

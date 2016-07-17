@@ -125,7 +125,7 @@ osc2.frequency.value = 80;
              <section id="slide-12">
                 <p class="fragment fade-in" data-fragment-index="1">Automate the amplitude and frequency</p>
                 <p class="fragment fade-in" data-fragment-index="2"><img data-src="./images/kickwave.png"></p>
-                <p class="fragment fade-in" data-fragment-index="3">The sound of a kick drum starts off with high attack and falls away rapidly. So to emulate this, we can use the methods <code>setValueAtTime()</code> or <code>linearRampToValueAtTime()</code> and <code>exponentialRampToValueAtTime()</code> methods</p>
+                <p class="fragment fade-in" data-fragment-index="3">The sound of a kick drum starts off with high attack and falls away rapidly. So to emulate this, we can use the methods <code>setValueAtTime()</code> or <code>linearRampToValueAtTime()</code> and <code>exponentialRampToValueAtTime()</code></p>
             </section>
             <section id="slide-13">
             <p class="fragment fade-in" data-fragment-index="1">Automating our oscillator and gain nodes.</p>
@@ -136,7 +136,119 @@ gainOsc.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5)
 gainOsc2.gain.setValueAtTime(1, audioContext.currentTime);
 gainOsc2.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5);  
                 </code></pre></p> 
-                </section>    
+                <p class="fragment fade-in" data-fragment-index="3">Do the same for the frequency values as well</p>
+            <p> <pre><code class="fragment fade-in" data-fragment-index="4" data-trim data-noescape>
+osc.frequency.setValueAtTime(120, audioContext.currentTime);
+osc.frequency.exponentialRampToValueAtTime(1, audioContext.currentTime + 0.5);
+
+osc2.frequency.setValueAtTime(50, audioContext.currentTime);
+osc2.frequency.exponentialRampToValueAtTime(1, audioContext.currentTime + 0.5);
+                </code></pre></p> 
+                <p class="fragment fade-in" data-fragment-index="5">Connect everything together</p>
+                            <p> <pre><code class="fragment fade-in" data-fragment-index="6" data-trim data-noescape>
+osc.connect(gainOsc);
+osc2.connect(gainOsc2);
+gainOsc.connect(audioContext.destination);
+gainOsc2.connect(audioContext.destination);
+                </code></pre></p> 
+                </section>   
+                <section id="slide-14">
+                <p class="fragment fade-in" data-fragment-index="1">Our final steps would be to start and stop our oscillators</p>
+                <p> <pre><code class="fragment fade-in" data-fragment-index="2" data-trim data-noescape>
+osc.start(audioContext.currentTime);
+osc2.start(audioContext.currentTime);
+
+osc.stop(audioContext.currentTime + 0.5);
+osc2.stop(audioContext.currentTime + 0.5);
+                </code></pre></p> 
+            </section> 
+            <section id="slide-15">
+                <p class="fragment fade-in" data-fragment-index="1">We are only able to start and stop the oscillators once, so what I did was to put everything in a function</p>
+                <p> <pre><code class="fragment fade-in" data-fragment-index="2" data-trim data-noescape>
+function kick() {
+
+    var osc = audioContext.createOscillator();
+    var osc2 = audioContext.createOscillator();
+    var gainOsc = audioContext.createGain();
+    var gainOsc2 = audioContext.createGain();
+
+    osc.type = "triangle";
+    osc2.type = "sine";
+
+    gainOsc.gain.setValueAtTime(1, audioContext.currentTime);
+    gainOsc.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5);
+
+    gainOsc2.gain.setValueAtTime(1, audioContext.currentTime);
+    gainOsc2.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5);
+   
+    osc.frequency.setValueAtTime(120, audioContext.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5);
+
+    osc2.frequency.setValueAtTime(50, audioContext.currentTime);
+    osc2.frequency.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5);
+
+    osc.connect(gainOsc);
+    osc2.connect(gainOsc2);
+    gainOsc.connect(audioContext.destination);
+    gainOsc2.connect(audioContext.destination);
+
+    osc.start(audioContext.currentTime);
+    osc2.start(audioContext.currentTime);
+
+    osc.stop(audioContext.currentTime + 0.5);
+    osc2.stop(audioContext.currentTime + 0.5);
+
+};
+                </code></pre></p> 
+            </section> 
+            <section id="slide-16">
+                <p class="fragment fade-in" data-fragment-index="1">Hear what <code>kick()</code> sounds like!</p>
+                <br><div class="btnz fragment fade-in" data-fragment-index="2">
+                <button type="button" id="mixButton" class="btns">Play Kick</button>
+                <button type="button" id="stopButton" class="btns">Stop</button></div>
+                <br><p><div id="container2" class="bigbox"></div></p>
+            </section> 
+            <section id="slide-17">
+                <p class="fragment fade-in" data-fragment-index="1">What is going on?</p>
+              
+            </section> 
+            <section id="slide-18">
+                <p class="fragment fade-in" data-fragment-index="1"> <h3>Seek guidance again from shifu <br> Chris Lowis</h3></p>
+                <p><span class="fragment fade-in" data-fragment-index="2"><a href="http://www.html5rocks.com/en/tutorials/audio/scheduling/">A Tale of Two Clocks - Scheduling Web Audio with Precision</a></span></p>
+                <p><span class="fragment fade-in" data-fragment-index="3"><a href="http://sonoport.github.io/web-audio-clock.html">Understanding The Web Audio Clock</a></span></p>
+            </section>
+            <section id="slide-19">
+                <p class="fragment fade-in" data-fragment-index="1"> <h3>Synthesising the snare drum</h3></p>
+                <p class="fragment fade-in" data-fragment-index= "2"> When you hit a snare drum, there’s a series of wire springs underneath it that rattles. That rattling can be synthesised using a burst of noise.</p>
+            </section>
+            <section id="slide-20">
+                <p class="fragment fade-in" data-fragment-index="1"> <h3>So how do we make noise using <br>web audio?</h3></p>
+                <p class="fragment fade-in" data-fragment-index= "2"> We use a random number generator!</p>
+                <p class="fragment fade-in" data-fragment-index= "3"> Click<a href="http://sonoport.github.io/web-audio-clock.html"> here </a> for an awesome article on generating different kinds of noise using web audio</p>                
+            </section>
+            <section id="slide-21">
+                <p class="fragment fade-in" data-fragment-index="1"> Noise Generator </p>
+                <p> <pre><code class="fragment fade-in" data-fragment-index="2" data-trim data-noescape>
+function noise() {
+
+    var node = audioContext.createBufferSource(),
+        buffer = audioContext.createBuffer(1, 4096, audioContext.sampleRate),
+        data = buffer.getChannelData(0);
+
+    for (var i = 0; i < 4096; i++) {
+
+        data[i] = Math.random();
+    }
+
+    node.buffer = buffer;
+    node.loop = true;
+    node.start(audioContext.currentTime);
+    node.stop(audioContext.currentTime + 0.2);
+    node.connect(audioContext.destination);
+};
+                </code></pre></p>
+               <br> <button type="button" id="noiseButton" class="fragment fade-in hvr-buzz" data-fragment-index="3">Click for Noise</button>            
+            </section>
         </div>
     </div>
     <script src="lib/js/head.min.js"></script>

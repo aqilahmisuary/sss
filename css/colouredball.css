@@ -54,3 +54,10 @@ code {
 .reveal pre code  {
   font-size: 20px;
 }
+
+.btns {
+  width: 180px;
+  height: 60px;
+  background-color: white;
+
+}
