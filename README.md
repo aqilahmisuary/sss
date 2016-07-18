@@ -1,8 +1,6 @@
 # Sound Synthesis Slides
 Music Tech Talk: Sound Synthesis Slides (SSS)
 
-![Music Tech Talk 18th July 2016 @ Paypal](https://dl.dropboxusercontent.com/u/30075450/Credits_Joshua_2.jpg "Credits to Joshua for the photo")
-
 ![Music Tech Talk 18th July 2016 @ Paypal](https://dl.dropboxusercontent.com/u/30075450/Credits_Subh.jpeg "Credits to Subh for the photo")
 
 Links
