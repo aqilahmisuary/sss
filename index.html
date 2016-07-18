@@ -224,7 +224,7 @@ function kick() {
             <section id="slide-20">
                 <p class="fragment fade-in" data-fragment-index="1"> <h3>So how do we make noise using <br>web audio?</h3></p>
                 <p class="fragment fade-in" data-fragment-index= "2"> We use a random number generator!</p>
-                <p class="fragment fade-in" data-fragment-index= "3"> Click<a href="http://sonoport.github.io/web-audio-clock.html"> here </a> for an awesome article on generating different kinds of noise using web audio</p>                
+                <p class="fragment fade-in" data-fragment-index= "3"> Click<a href="http://noisehack.com/generate-noise-web-audio-api/"> here </a> for an awesome article on generating different kinds of noise using web audio</p>                
             </section>
             <section id="slide-21">
                 <p class="fragment fade-in" data-fragment-index="1"> Noise Generator </p>
@@ -322,7 +322,7 @@ bandpass.frequency.value = 10000;
 gainOsc4.gain.setValueAtTime(1, audioContext.currentTime);
 gainOsc4.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
                 </code></pre></p>
-                <p class="fragment fade-in" data-fragment-index="5">Finally add a highpass filter to clear away the low frequencies</p>
+                <p class="fragment fade-in" data-fragment-index="5">Add a highpass filter to clear away the low frequencies</p>
                  <p> <pre><code class="fragment fade-in" data-fragment-index="6" data-trim data-noescape>
 var highpass = audioContext.createBiquadFilter();
 highpass.type = "highpass";
