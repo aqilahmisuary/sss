@@ -1,6 +1,8 @@
 # Sound Synthesis Slides
 Music Tech Talk: Sound Synthesis Slides (SSS)
 
+![Music Tech Talk 18th July 2016 @ Paypal](./Photos/Credits_Subh.jpeg "Credits to Subh for the photo")
+
 Links
 * [Synthesising Drum Sounds with the Web Audio API](https://dev.opera.com/articles/drum-sounds-webaudio/)
 * [Sonoport Web Audio Blog](http://sonoport.github.io/)
