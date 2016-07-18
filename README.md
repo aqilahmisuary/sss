@@ -1,4 +1,4 @@
-# sss
+# Sound Synthesis Slides
 Music Tech Talk: Sound Synthesis Slides (SSS)
 
 Links
