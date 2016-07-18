@@ -317,16 +317,16 @@ var bandpass = audioContext.createBiquadFilter();
 bandpass.type = "bandpass";
 bandpass.frequency.value = 10000;
                 </code></pre></p>
-                <p class="fragment fade-in" data-fragment-index="3">Refine it so it sounds more percussive by using our gain node <br> to set the envelope</p>
-                <p> <pre><code class="fragment fade-in" data-fragment-index="4" data-trim data-noescape>
-gainOsc4.gain.setValueAtTime(1, audioContext.currentTime);
-gainOsc4.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
-                </code></pre></p>
-                <p class="fragment fade-in" data-fragment-index="5">Add a highpass filter to clear away the low frequencies</p>
-                 <p> <pre><code class="fragment fade-in" data-fragment-index="6" data-trim data-noescape>
+                <p class="fragment fade-in" data-fragment-index="3">Add a highpass filter to clear away the low frequencies</p>
+                 <p> <pre><code class="fragment fade-in" data-fragment-index="4" data-trim data-noescape>
 var highpass = audioContext.createBiquadFilter();
 highpass.type = "highpass";
 highpass.frequency.value = 7000;
+                </code></pre></p>
+                <p class="fragment fade-in" data-fragment-index="5">Refine it so it sounds more percussive by using our gain node <br> to set the envelope</p>
+                <p> <pre><code class="fragment fade-in" data-fragment-index="6" data-trim data-noescape>
+gainOsc4.gain.setValueAtTime(1, audioContext.currentTime);
+gainOsc4.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
                 </code></pre></p>
             </section> 
             <section id="slide-29">
