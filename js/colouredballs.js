@@ -355,7 +355,8 @@ the number of data values you will have to play with for the visualization*/
 
     //BUTTON
     mixButton.addEventListener('mouseover', function() {
-        draw2();
+        //draw2();
+        kick();
     });
 
     //INTERVALS
