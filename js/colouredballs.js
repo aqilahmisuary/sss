@@ -94,6 +94,7 @@ window.onload = function() {
 
     canvas.addEventListener("mouseover", function() {
         setInterval(draw, 60);
+        context.resume();
         //var refreshIntervalId = setInterval(draw, 20);
         //draw();
 
@@ -154,7 +155,7 @@ window.onload = function() {
     });
 
 
-    getSample('https://dl.dropboxusercontent.com/u/30075450/Greek%207%20Echo%20Hall.wav', function(impulse) {
+    getSample('./audio/echohall.wav', function(impulse) {
 
         var convolver = context.createConvolver()
         var buffer = context.createBufferSource()
